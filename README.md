@@ -57,7 +57,7 @@ src/
 ├── server.ts
 </pre>
 
-# Blog Project Blog Model 🚟
+# Blog Model 🚟
 <pre>
      title: {
         type: String,
@@ -177,13 +177,30 @@ src/
 }
 </pre>
 
+<li>I am implement error handling for user block from admin</li>
+<pre>
+    {
+    "success": false,
+    "message": "This user is blocked ! !",
+    "errorSources": [
+        {
+            "path": "",
+            "message": "This user is blocked ! !"
+        }
+    ],
+    "err": {
+        "statusCode": 403
+    },
+    "stack": "Error: This user is blocked ! !\n    at /var/task/dist/modules/auth/auth.service.js:31:15\n ...."
+}
+</pre>
 
 <li><strong>API Not Found:</strong> If you hit a wrong route, it will send a message and tell you your status, and which route you hit. </li>
 <pre>
 {
 "success": false,
-"message": "API Not Found !!",
-"error": ""
+"message": "API Not Found /gh",
+"error": "Error: API Not Found /gh\n    at notFound (/var/task/dist/middlewares/notFound.js:10:19)\n ..."
 }
 </pre>
 

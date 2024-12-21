@@ -14,20 +14,6 @@ const createBlogContent: RequestHandler = catchAsync(
   async (req, res, next) => {
     const statusCode = 201;
     const { title, content } = req.body;
-
-    // let token = null;
-    // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    //   token = req.headers.authorization.split(" ")[1];
-    // }
-
-    // console.log(token);
-
-    // if (!token) {
-    //   throw new Error("You are not Authorized!");
-    // }
-    // const author = jwt.verify(token, config.jwt_access_secret as string) as JwtPayload;
-
-
     const userId = await User.findOne({ email: req.user.userEmail })
 
     const blogData: any = {
@@ -50,7 +36,14 @@ const getBlogContent = catchAsync(async (req, res) => {
     success: true,
     statusCode: httpStatus.OK,
     message: 'Blog retrieved successfully',
-    data: result,
+    data: result.map(res => {
+      return {
+        _id: res._id,
+        title: res.title,
+        content: res.content,
+        author: res.author,
+      }
+    } )
   })
 
 })

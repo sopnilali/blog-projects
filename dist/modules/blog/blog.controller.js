@@ -21,15 +21,6 @@ const user_model_1 = require("../user/user.model");
 const createBlogContent = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const statusCode = 201;
     const { title, content } = req.body;
-    // let token = null;
-    // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    //   token = req.headers.authorization.split(" ")[1];
-    // }
-    // console.log(token);
-    // if (!token) {
-    //   throw new Error("You are not Authorized!");
-    // }
-    // const author = jwt.verify(token, config.jwt_access_secret as string) as JwtPayload;
     const userId = yield user_model_1.User.findOne({ email: req.user.userEmail });
     const blogData = {
         title,
@@ -46,7 +37,14 @@ const getBlogContent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         success: true,
         statusCode: http_status_1.default.OK,
         message: 'Blog retrieved successfully',
-        data: result,
+        data: result.map(res => {
+            return {
+                _id: res._id,
+                title: res.title,
+                content: res.content,
+                author: res.author,
+            };
+        })
     });
 }));
 const updateBlogContent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
