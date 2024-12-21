@@ -22,8 +22,12 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'User is created succesfully!',
-        data: result,
+        message: 'User registered successfully',
+        data: {
+            _id: result._id,
+            name: result.name,
+            email: result.email,
+        },
     });
 }));
 const GetUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
