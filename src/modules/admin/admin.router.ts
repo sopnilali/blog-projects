@@ -6,7 +6,7 @@ import { adminController } from './admin.controller';
 
 const router = express.Router();
 
-router.put('/users/:userId/block', auth(USER_ROLE.admin), adminController.AdminBlockUser)
+router.patch('/users/:userId/block', auth(USER_ROLE.admin), adminController.AdminBlockUser)
 router.delete('/blogs/:id', auth(USER_ROLE.admin), adminController.DeleteBlogContentFromAdmin)
 
 export const AdminRoutes = router;

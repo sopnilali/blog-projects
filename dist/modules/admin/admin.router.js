@@ -9,6 +9,6 @@ const auth_1 = __importDefault(require("../../middlewares/auth"));
 const user_constant_1 = require("../user/user.constant");
 const admin_controller_1 = require("./admin.controller");
 const router = express_1.default.Router();
-router.put('/users/:userId/block', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), admin_controller_1.adminController.AdminBlockUser);
+router.patch('/users/:userId/block', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), admin_controller_1.adminController.AdminBlockUser);
 router.delete('/blogs/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin), admin_controller_1.adminController.DeleteBlogContentFromAdmin);
 exports.AdminRoutes = router;
