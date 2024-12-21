@@ -1,4 +1,3 @@
-import QueryBuilder from "../../builder/QueryBuilder";
 import { blogSearchableFields } from "./blog.constant";
 import { TBlogContent } from "./blog.interface";
 import Blog from "./blog.model";

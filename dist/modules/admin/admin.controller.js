@@ -16,27 +16,26 @@ exports.adminController = void 0;
 const admin_service_1 = require("./admin.service");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_1 = __importDefault(require("http-status"));
+const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
-const AdminBlockUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const userId = req.params.userId;
-        const user = yield admin_service_1.AdminService.UserBlockFromAdmininDB(userId);
-        if (!user) {
-            throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found ! !');
-        }
-        // Update the isBlocked property
-        user.isBlocked = true;
-        yield user.save();
-        res.status(200).json({
-            success: true,
-            message: 'User blocked successfully',
-            statusCode: 200,
-        });
+const AdminBlockUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.userId;
+    const user = yield admin_service_1.AdminService.UserBlockFromAdmininDB(userId);
+    if (!user) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'User not found');
     }
-    catch (error) {
-        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "not found");
+    if (user.isBlocked === true) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "User already blocked");
     }
-});
+    // Update the isBlocked property
+    user.isBlocked = true;
+    yield user.save();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        message: 'User blocked successfully',
+        statusCode: http_status_1.default.OK,
+    });
+}));
 const DeleteBlogContentFromAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const blogid = req.params.id;
     const result = yield admin_service_1.AdminService.deleteBlogContentFromAdminDB(blogid);

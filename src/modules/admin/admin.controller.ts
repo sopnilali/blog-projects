@@ -8,35 +8,38 @@ import catchAsync from "../../utils/catchAsync";
 
 
 
-const AdminBlockUser: RequestHandler = async (req, res) => {
-    try {
-        const userId = req.params.userId;
-        const user = await AdminService.UserBlockFromAdmininDB(userId)
+const AdminBlockUser: RequestHandler = catchAsync(async (req, res) => {
+    const userId = req.params.userId;
+    const user = await AdminService.UserBlockFromAdmininDB(userId)
 
-
-        if (!user) {
-            throw new AppError(httpStatus.NOT_FOUND, 'This user is not found ! !');
-        }
-        // Update the isBlocked property
-        user.isBlocked = true;
-        await user.save();
-
-        res.status(200).json({
-            success: true,
-            message: 'User blocked successfully',
-            statusCode: 200,
-        });
-
-    } catch (error) {
-        throw new AppError(httpStatus.BAD_REQUEST, "not found")
+    
+    if (!user) {
+        throw new AppError(httpStatus.NOT_FOUND, 'User not found');
     }
-}
 
-const DeleteBlogContentFromAdmin: RequestHandler = catchAsync (async (req, res) => {
+    if (user.isBlocked === true ) {
+        throw new AppError(httpStatus.BAD_REQUEST, "User already blocked")
+    }
+
+
+    // Update the isBlocked property
+    user.isBlocked = true;
+    await user.save();
+    sendResponse(res, {
+        success: true,
+        message: 'User blocked successfully',
+        statusCode: httpStatus.OK,
+    })
+
+})
+
+
+
+const DeleteBlogContentFromAdmin: RequestHandler = catchAsync(async (req, res) => {
     const blogid = req.params.id;
     const result = await AdminService.deleteBlogContentFromAdminDB(blogid)
 
-    if (result.deletedCount === 0 ) {
+    if (result.deletedCount === 0) {
         throw new AppError(httpStatus.NOT_FOUND, " blog not found");
     }
 
