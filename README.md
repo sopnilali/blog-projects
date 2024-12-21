@@ -1,6 +1,8 @@
 # 🎉 Welcome to My Blog Project !!
-<h2>Blog Project</h2>
+<h2>Project Overview</h2>
 <p>Assalamu Alaikum! My Name is Md Abdul Adud. Project Name: Blog Project. I am Develop an Express application with TypeScript, integrating MongoDB with Mongoose to manage a Blog Project.</p>
+
+<p>Develop a backend for a blogging platform with two roles: Admin (manages users and blogs) and User (CRUD on their blogs). Features include secure authentication, role-based access control, and a public API for viewing blogs with search, sort, and filter options.</p>
 
 <h2>Project Name: Blog Project </h2>
 
@@ -8,12 +10,12 @@
 
  <strong>Live: URL</strong> : https://blog-projects.vercel.app/
 
- <strong>Video Explanation</strong>: https://drive.google.com/file/d/1fwnAzfQg8IbDaHqYAYTKJoC4eAn1c-IR/view
+ <strong>Video Explanation</strong>: https://drive.google.com/file/d/1o8kTxMshSuzYhJuqlAuUHS50C5PC5B94/view
 
 <h2> Technology Used ⚙️</h2>
 <li>Node.js</li>
 <li>Express.js</li>
-<li>Mongoose</li>
+<li>MongoDB with Mongoose</li>
 <li>TypeScript</li>
 
 # Folder Structure 📂
@@ -109,6 +111,7 @@ src/
 <li>Get All Blog by Search Terms (ex: blogtitle, sortBy=title, Filter blogs by author ID)</li>
 <li>Update Blog. To update blog, you need to update the blog using blogid. But You can must first login user and then user Authorization Bearer token. And then if this token is valid so you can update blog content otherwise not delete blog content</li>
 <li>Delete Blog. To delete blogs, you need to delete the blogs using blog. But You can must first login user and then user Authorization Bearer token. And then if this token is valid so you can update blog content otherwise not delete blog content</li>
+<li>If a user is blocked, that user will not receive any services.</li>
 
 # Features of Admin 👤
 
@@ -120,6 +123,7 @@ src/
 <li>Create Users (ex: name, email, password, role (default role --> user))</li>
 <li>Only the admin can see all user data. For this, the admin must use the Authorization Bearer token. Otherwise, you will be kicked out with a consolation prize.</li>
 <li>User Login using email and password (ex: example@example.com, example1234) </li>
+<li>If a user is blocked, that user will not receive any services.</li>
 
 # Error Handling ⚠️
 <li>I am implement error handling for invalid authorization. If your token is invalid or not assign authorization token , then show this error message</li>
