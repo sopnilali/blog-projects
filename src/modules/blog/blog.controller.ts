@@ -28,12 +28,12 @@ const createBlogContent: RequestHandler = catchAsync(
     // const author = jwt.verify(token, config.jwt_access_secret as string) as JwtPayload;
 
 
-    const userId = await User.findOne({email: req.user.userEmail})
+    const userId = await User.findOne({ email: req.user.userEmail })
 
     const blogData: any = {
       title,
       content,
-      author : userId?._id,
+      author: userId?._id,
 
     };
 
@@ -45,18 +45,18 @@ const createBlogContent: RequestHandler = catchAsync(
 )
 
 const getBlogContent = catchAsync(async (req, res) => {
-    const result = await blogServices.getBlogContentFromDB()
-    sendResponse(res, {
-        success: true,
-        statusCode: httpStatus.OK,
-        message: 'Blog retrieved successfully',
-        data: result,
-    })
- 
+  const result = await blogServices.getBlogContentFromDB()
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Blog retrieved successfully',
+    data: result,
+  })
+
 })
 
 
-const updateBlogContent : RequestHandler = async (req, res) => {
+const updateBlogContent: RequestHandler = async (req, res) => {
   try {
     const blogData = req.body
     const blogid = req.params.id
@@ -89,14 +89,16 @@ const updateBlogContent : RequestHandler = async (req, res) => {
 }
 
 
-const deleteBlogContent :RequestHandler = async (req, res) => {
+const deleteBlogContent: RequestHandler = async (req, res) => {
   try {
     const blogid = req.params.id
     const result = await blogServices.deleteBlogContentByIdfromDB(blogid)
     if (result) {
+      const statuscode = 200
       res.status(200).json({
+        success: true,
         message: 'Blog deleted successfully',
-        status: true,
+        statusCode: statuscode,
       })
     }
   } catch (error) {
@@ -112,10 +114,10 @@ const deleteBlogContent :RequestHandler = async (req, res) => {
 
 
 export const blogController = {
-    createBlogContent,
-    getBlogContent,
-    updateBlogContent,
-    deleteBlogContent
+  createBlogContent,
+  getBlogContent,
+  updateBlogContent,
+  deleteBlogContent
 }
 
 

@@ -16,6 +16,7 @@ exports.adminController = void 0;
 const admin_service_1 = require("./admin.service");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_1 = __importDefault(require("http-status"));
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const AdminBlockUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.params.userId;
@@ -36,23 +37,19 @@ const AdminBlockUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "not found");
     }
 });
-const DeleteBlogContentFromAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const userId = req.params.id;
-        const user = yield admin_service_1.AdminService.deleteBlogContentFromAdminDB(userId);
-        if (!user) {
-            throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found ! !');
-        }
-        res.status(200).json({
-            success: true,
-            message: 'Blog deleted successfully',
-            statusCode: 200,
-        });
+const DeleteBlogContentFromAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const blogid = req.params.id;
+    const result = yield admin_service_1.AdminService.deleteBlogContentFromAdminDB(blogid);
+    if (result.deletedCount === 0) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, " blog not found");
     }
-    catch (error) {
-        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "not found");
-    }
-});
+    const statuscode = 200;
+    res.status(200).json({
+        success: true,
+        message: 'Blog deleted successfully',
+        statusCode: statuscode,
+    });
+}));
 exports.adminController = {
     AdminBlockUser,
     DeleteBlogContentFromAdmin

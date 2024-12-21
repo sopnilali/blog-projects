@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/', auth(USER_ROLE.user), blogController.createBlogContent)
 router.get('/', blogController.getBlogContent)
 router.put('/:id', auth(USER_ROLE.user), blogController.updateBlogContent)
-router.delete('/:id', auth(USER_ROLE.admin), blogController.deleteBlogContent)
+router.delete('/:id', auth(USER_ROLE.admin, USER_ROLE.user), blogController.deleteBlogContent)
 
 
 export const blogRoutes = router;
