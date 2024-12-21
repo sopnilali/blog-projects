@@ -22,7 +22,19 @@ const getBlogContentFromDB = () => __awaiter(void 0, void 0, void 0, function* (
     const result = yield blog_model_1.default.find().populate({ path: 'author' });
     return result;
 });
+const updateBlogContentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_model_1.default.findByIdAndUpdate(id, payload, {
+        new: true,
+    });
+    return result;
+});
+const deleteBlogContentByIdfromDB = (blogid) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield blog_model_1.default.findByIdAndDelete(blogid);
+    return result;
+});
 exports.blogServices = {
     createBlogContentFromDB,
-    getBlogContentFromDB
+    getBlogContentFromDB,
+    updateBlogContentFromDB,
+    deleteBlogContentByIdfromDB
 };

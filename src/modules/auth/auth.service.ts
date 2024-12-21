@@ -15,7 +15,7 @@ const loginUser = async (payload: TLoginUser) => {
   }
   // checking if the user is blocked
 
-  const userStatus = user.isblocked;
+  const userStatus = user.isBlocked;
 
   if (userStatus === true) {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
@@ -68,7 +68,7 @@ const refreshToken = async (token: string) => {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
   // checking if the user is blocked
-  const userStatus = user?.isblocked;
+  const userStatus = user?.isBlocked;
 
   if (userStatus === true) {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');

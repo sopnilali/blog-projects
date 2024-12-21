@@ -4,6 +4,7 @@ const express_1 = require("express");
 const user_router_1 = require("../modules/user/user.router");
 const blog_router_1 = require("../modules/blog/blog.router");
 const auth_router_1 = require("../modules/auth/auth.router");
+const admin_router_1 = require("../modules/admin/admin.router");
 const router = (0, express_1.Router)();
 const moduleRoutes = [
     {
@@ -17,6 +18,10 @@ const moduleRoutes = [
     {
         path: "/auth",
         routes: auth_router_1.authRoutes
+    },
+    {
+        path: "/admin",
+        routes: admin_router_1.AdminRoutes
     }
 ];
 moduleRoutes.forEach(({ path, routes }) => {

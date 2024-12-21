@@ -26,7 +26,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !');
     }
     // checking if the user is blocked
-    const userStatus = user.isblocked;
+    const userStatus = user.isBlocked;
     if (userStatus === true) {
         throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This user is blocked ! !');
     }
@@ -55,7 +55,7 @@ const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !');
     }
     // checking if the user is blocked
-    const userStatus = user === null || user === void 0 ? void 0 : user.isblocked;
+    const userStatus = user === null || user === void 0 ? void 0 : user.isBlocked;
     if (userStatus === true) {
         throw new AppError_1.default(http_status_1.default.FORBIDDEN, 'This user is blocked ! !');
     }

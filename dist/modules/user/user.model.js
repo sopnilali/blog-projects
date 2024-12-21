@@ -68,4 +68,4 @@ userSchema.statics.isJWTIssuedBeforePasswordChanged = function (passwordChangedT
     const passwordChangedTime = new Date(passwordChangedTimestamp).getTime() / 1000;
     return passwordChangedTime > jwtIssuedTimestamp;
 };
-exports.User = (0, mongoose_1.model)('User', userSchema);
+exports.User = (0, mongoose_1.model)('users', userSchema);

@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const routes_1 = __importDefault(require("./routes"));
+const notFound_1 = __importDefault(require("./middlewares/notFound"));
+const globalErrorhandler_1 = __importDefault(require("./middlewares/globalErrorhandler"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
@@ -18,7 +20,7 @@ app.get('/', (req, res) => {
         message: 'Welcome to Blog Project API',
     });
 });
-// app.use(globalErrorHandler);
+app.use(globalErrorhandler_1.default);
 //Not Found
-// app.use(notFound)
+app.use(notFound_1.default);
 exports.default = app;
