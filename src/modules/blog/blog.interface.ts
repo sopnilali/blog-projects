@@ -8,4 +8,7 @@ export interface TBlogContent {
     createdAt: NativeDate
     updatedAt: NativeDate
   }
-  
+
+
+ export interface IQuery { 
+  author?: string; $or?: Array<{ title: { $regex: string; $options: string } } | { content: { $regex: string; $options: string } }>}

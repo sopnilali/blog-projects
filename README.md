@@ -111,7 +111,7 @@ src/
 <li>Get All Blog by Search Terms (ex: blogtitle, sortBy=title, Filter blogs by author ID)</li>
 <li>Update Blog. To update blog, you need to update the blog using blogid. But You can must first login user and then user Authorization Bearer token. And then if this token is valid so you can update blog content otherwise not delete blog content</li>
 <li>Delete Blog. To delete blogs, you need to delete the blogs using blog. But You can must first login user and then user Authorization Bearer token. And then if this token is valid so you can update blog content otherwise not delete blog content</li>
-<li>If a user is blocked, that user will not receive any services.</li>
+<li>If a user is blocked, that user will not be able to post blogs.</li>
 
 # Features of Admin 👤
 

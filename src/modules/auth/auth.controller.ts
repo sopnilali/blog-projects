@@ -14,16 +14,22 @@ const loginUser = catchAsync(async (req, res) => {
       secure: config.node_env === 'production',
       httpOnly: true,
     });
-    
   
     sendResponse(res, {
-      statusCode: httpStatus.OK,
       success: true,
       message: 'Login successful',
+      statusCode: httpStatus.OK,
       data: {
         tokken: accessToken,
       },
     });
+
+  //   res.status(200).json({
+  //     success: true,
+  //     message: 'Login successful',
+  //     statusCode: 200,
+  // });
+
   });
 
   const refreshToken = catchAsync(async (req, res) => {

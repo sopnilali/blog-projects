@@ -1,12 +1,11 @@
 import httpStatus from "http-status"
 import catchAsync from "../../utils/catchAsync"
-import sendResponse from "../../utils/sendResponse"
 import { blogServices } from "./blog.service"
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { ErrorRequestHandler, RequestHandler } from "express"
-import config from "../../config";
-import Blog from "./blog.model";
+import { RequestHandler } from "express"
 import { User } from "../user/user.model";
+import AppError from "../../errors/AppError";
+import { IQuery } from "./blog.interface";
+import sendResponse from "../../utils/sendResponse";
 
 
 
@@ -23,30 +22,59 @@ const createBlogContent: RequestHandler = catchAsync(
 
     };
 
-    const ressult = await blogServices.createBlogContentFromDB(blogData)
+    const result = await blogServices.createBlogContentFromDB(blogData)
 
-    // Logic to save blogData to database
-    res.status(statusCode).json({ message: "Blog created successfully!", ressult });
+    // blog to save blogData to database
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Blog created successfully!",
+      data: {
+        _id: result._id,
+        title: result.title,
+        content: result.content,
+        author: result.author,
+      },
+    });
   }
 )
 
-const getBlogContent = catchAsync(async (req, res) => {
-  const result = await blogServices.getBlogContentFromDB()
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Blog retrieved successfully',
-    data: result.map(res => {
-      return {
-        _id: res._id,
-        title: res.title,
-        content: res.content,
-        author: res.author,
-      }
-    } )
-  })
+const getBlogContent: RequestHandler = catchAsync(async (req, res) => {
+  const { search, sortBy = 'createdAt', sortOrder = 'desc', filter } = req.query;
 
-})
+  // Build query object
+  let query: IQuery = {};
+
+  if (search) {
+    query.$or = [
+      { title: { $regex: search as string, $options: 'i' } },
+      { content: { $regex: search as string, $options: 'i' } },
+    ];
+  }
+
+
+  if (filter) {
+    query.author = filter as string;
+  }
+  // Ensure sortBy is a string
+  const validSortBy = typeof sortBy === 'string' ? sortBy : 'createdAt';
+
+  const result = await blogServices.getBlogContentFromDB(query, validSortBy, sortOrder)
+  // Response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Blog created successfully!",
+    data: result.map((blog) => ({
+      _id: blog._id,
+      title: blog.title,
+      content: blog.content,
+      author: blog.author,
+    })),
+  });
+}
+
+)
 
 
 const updateBlogContent: RequestHandler = async (req, res) => {
@@ -86,6 +114,20 @@ const deleteBlogContent: RequestHandler = async (req, res) => {
   try {
     const blogid = req.params.id
     const result = await blogServices.deleteBlogContentByIdfromDB(blogid)
+
+    if (!result?._id) {
+      throw new AppError(httpStatus.NOT_FOUND, " blog not found");
+    }
+
+    const statuscode = 200
+
+    res.status(200).json({
+      success: true,
+      message: 'Blog deleted successfully',
+      statusCode: statuscode,
+    })
+
+
     if (result) {
       const statuscode = 200
       res.status(200).json({
@@ -97,7 +139,7 @@ const deleteBlogContent: RequestHandler = async (req, res) => {
   } catch (error) {
     const stackerror = new Error()
     res.json({
-      message: 'An error occurred while deleting product',
+      message: 'An error occurred while deleting blog',
       status: false,
       error: error,
       stack: stackerror.stack,

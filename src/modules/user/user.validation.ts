@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const createUserValidationSchema = z.object({
-    name: z.string().optional(),
-    email: z.string().optional(),
+    name: z.string(),
+    email: z.string(),
     password: z.string({
         invalid_type_error: 'Password must be string',
     })

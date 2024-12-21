@@ -26,13 +26,18 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         httpOnly: true,
     });
     (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
         success: true,
         message: 'Login successful',
+        statusCode: http_status_1.default.OK,
         data: {
             tokken: accessToken,
         },
     });
+    //   res.status(200).json({
+    //     success: true,
+    //     message: 'Login successful',
+    //     statusCode: 200,
+    // });
 }));
 const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { refreshToken } = req.cookies;

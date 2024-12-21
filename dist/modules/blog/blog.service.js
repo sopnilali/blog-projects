@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.blogServices = void 0;
 const blog_model_1 = __importDefault(require("./blog.model"));
 const createBlogContentFromDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield blog_model_1.default.create(payload);
+    const result = (yield blog_model_1.default.create(payload)).populate({ path: "author" });
     return result;
 });
-const getBlogContentFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield blog_model_1.default.find().populate({ path: 'author' });
-    return result;
+const getBlogContentFromDB = (query, validSortBy, sortOrder) => __awaiter(void 0, void 0, void 0, function* () {
+    // Fetch blogs from DB with sorting
+    const allblogs = yield blog_model_1.default.find(query).sort({ [validSortBy]: sortOrder === 'asc' ? 1 : -1 }).populate({
+        path: 'author',
+    });
+    return allblogs;
 });
 const updateBlogContentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield blog_model_1.default.findByIdAndUpdate(id, payload, {
