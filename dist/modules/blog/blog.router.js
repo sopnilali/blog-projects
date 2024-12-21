@@ -11,6 +11,6 @@ const user_constant_1 = require("../user/user.constant");
 const router = express_1.default.Router();
 router.post('/', (0, auth_1.default)(user_constant_1.USER_ROLE.user), blog_controller_1.blogController.createBlogContent);
 router.get('/', blog_controller_1.blogController.getBlogContent);
-router.put('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.user), blog_controller_1.blogController.updateBlogContent);
+router.patch('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.user), blog_controller_1.blogController.updateBlogContent);
 router.delete('/:id', (0, auth_1.default)(user_constant_1.USER_ROLE.admin, user_constant_1.USER_ROLE.user), blog_controller_1.blogController.deleteBlogContent);
 exports.blogRoutes = router;
