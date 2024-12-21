@@ -62,7 +62,7 @@ const getBlogContent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: "Blog created successfully!",
+        message: "Blogs fetched successfully",
         data: result.map((blog) => ({
             _id: blog._id,
             title: blog.title,
@@ -77,9 +77,10 @@ const updateBlogContent = (req, res) => __awaiter(void 0, void 0, void 0, functi
         const blogid = req.params.id;
         const result = yield blog_service_1.blogServices.updateBlogContentFromDB(blogid, blogData);
         if (result) {
-            res.status(200).json({
+            (0, sendResponse_1.default)(res, {
+                success: true,
                 message: 'Blog updated successfully',
-                status: true,
+                statusCode: http_status_1.default.OK,
                 data: {
                     _id: result._id,
                     title: result.title,

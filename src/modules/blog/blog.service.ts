@@ -25,6 +25,9 @@ const updateBlogContentFromDB = async (
 ) => {
     const result = await Blog.findByIdAndUpdate(id, payload, {
         new: true,
+    }).populate({
+        path: 'author',
+
     })
     return result
 }

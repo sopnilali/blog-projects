@@ -64,7 +64,7 @@ const getBlogContent: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Blog created successfully!",
+    message: "Blogs fetched successfully",
     data: result.map((blog) => ({
       _id: blog._id,
       title: blog.title,
@@ -86,17 +86,22 @@ const updateBlogContent: RequestHandler = async (req, res) => {
       blogData
     )
     if (result) {
-      res.status(200).json({
+      sendResponse(res, {
+        success: true,
         message: 'Blog updated successfully',
-        status: true,
+        statusCode: httpStatus.OK,
         data: {
           _id: result._id,
           title: result.title,
           content: result.content,
           author: result.author,
         },
-      })
+      });
     }
+
+    
+
+
   } catch (error) {
     const stackerror = new Error()
     res.json({
