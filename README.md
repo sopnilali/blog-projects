@@ -122,7 +122,7 @@ src/
 <li>User Login using email and password (ex: example@example.com, example1234) </li>
 
 # Error Handling ⚠️
-<li>I am implement error handling for invalid authorization</li>
+<li>I am implement error handling for invalid authorization. If your token is invalid or not assign authorization token , then show this error message</li>
 <pre>
      {
     "success": false,
@@ -178,12 +178,12 @@ src/
 </pre>
 
 
-<li><strong>Not Found:</strong> If you hit a wrong route, it will send a message and tell you your status, and which route you hit. </li>
+<li><strong>API Not Found:</strong> If you hit a wrong route, it will send a message and tell you your status, and which route you hit. </li>
 <pre>
 {
-    "status": false,
-    "message": "Could not found /api/mylove",
-    "stack": "Error: Could not found /api/mylove\n    at C:\\new ts assignmet\\stationery-shop-server\\src\\app.ts:30:17\n
+"success": false,
+"message": "API Not Found !!",
+"error": ""
 }
 </pre>
 
